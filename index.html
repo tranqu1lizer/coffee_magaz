@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Кофе</title>
+    <h1>Coffee blog</h1>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <form>
+        <!--Здесь вы пишете все, что относится к форме-->
+        <label for="title"><b>Название напитка</b></label>
+        <input type="text" id="title" name="title" placeholder="Американо">
+        
+        <br>
+        <label for="sort"><b>Сорт кофе</b></label>
+        <select id="sort" name="sort">
+            <option>Гватемала</option>
+            <option>Куба</option>
+            <option>Сальвадор</option>
+            <option>Никарагуа</option>
+        </select>
+        <br>
+
+        <label for=""><b>Крепость обжарки</b></label>
+        <br>
+        <input id="ko1" type="radio" value="3" name="strong">
+        <label for="ko1">Крепкая</label>
+        <br>
+        <input id="ko2" type="radio" value="2" name="strong">
+        <label for="ko2">Средняя</label>
+        <br>
+        <input id="ko3" type="radio" value="1" name="strong">
+        <label for="ko3">Легкая</label>
+        <br>
+        <label for="image"><b>Изображение</b></label>
+        <input type="text" id="image" name="image" placeholder="">
+        <br>
+        <label for="cost"><b>Стоимость напитка</b></label>
+        <input type="text" id="cost" name="cost" placeholder="">
+        <br>
+        <label for="description"><b>Описание</b></label>
+        <textarea type="text" id="description" name="description" placeholder="">
+        </textarea>
+        <br>
+        <br>
+
+        <input type="submit" value="Добавить напиток">
+    </form>
+    <br>
+    <table id="table">
+        <thead>
+            <th>Изображение</th>
+            <th>Название</th>
+            <th>Сорт</th>
+            <th>Крепкость обжарки</th>
+            <th>Стоимость</th>
+            <th>Описание</th>
+        </thead>
+    </table>
+    
+</body>
+<script>
+    const f = document.forms[0];
+    let tr = document.getElementById("table");
+    let t = tr;
+    f.addEventListener("submit", (e) => {
+        e.preventDefault();
+        let body = {};
+        for (let i = 0; i < f.elements.length; i++) {
+            let tag = f[i];
+            if (tag.name) {
+                if (tag.type === "radio" && tag.checked) {
+                    body[tag.name] = tag.value;
+                } else if (tag.type !== "radio") {
+                    body[tag.name] = tag.value;
+                }
+            }
+        }
+        console.log(body);
+        let html = "<tr>";
+        html += `<td><img src="${body.image}" width="50" alt="${body.title}"></td>`;
+        html += `<td>${body.title || ""}</td>`;
+        html += `<td>${body.sort || ""}</td>`;
+        html += `<td>${body.strong || ""}</td>`;
+        html += `<td>${body.cost || ""}</td>`;
+        html += `<td>${body.description || ""}</td>`;
+        html += "</tr>"
+        t.innerHTML += html;
+    })
+</script>
+</html>
